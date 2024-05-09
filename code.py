@@ -3,9 +3,10 @@ from abc import ABC
 
 class Szoba(ABC):
 
-    def __init__(self, ar, szobaszam):
+    def __init__(self, ar, szobaszam, foglalt=False):
         self.ar = ar
         self.szobaszam = szobaszam
+        self.foglalt = foglalt
 
     pass
 
@@ -29,5 +30,15 @@ class Szalloda:
         self.nev = nev
         self.szobak = szobak
         self.foglalasok = []
+
+    pass
+
+
+class Foglalas:
+
+    def __init__(self, szobaszam, datum):
+        self.szobaszam = szobaszam
+        self.datum = datum
+        self.nap = 1
 
     pass
