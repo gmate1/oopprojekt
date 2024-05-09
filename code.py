@@ -75,6 +75,21 @@ class Foglalas:
 
     pass
 
+
+szobak_tomb = []
+szoba1 = EgyAgyasSzoba(1)
+szoba2 = EgyAgyasSzoba(2)
+szoba3 = KetAgyasSzoba(3)
+szobak_tomb.append(szoba1)
+szobak_tomb.append(szoba2)
+szobak_tomb.append(szoba3)
+szalloda = Szalloda('Szálloda', szobak_tomb)
+szalloda.foglalas(1, datetime(2025, 5, 9), "Gyuri")
+szalloda.foglalas(2, datetime(2025, 5, 9), "Tibi")
+szalloda.foglalas(3, datetime(2025, 5, 9), "Feri")
+szalloda.foglalas(1, datetime(2025, 5, 10), "Ákos")
+szalloda.foglalas(2, datetime(2025, 5, 10), "Máté")
+
 print("Üdvözlünk a szállodában!\nVálassza ki a kívánt műveletet(1,2,3)\n1. Foglalás\n2. Lemondás\n3. Listázás")
 valasztott_opcio = input()
 if valasztott_opcio == "1":
