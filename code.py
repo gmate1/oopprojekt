@@ -22,3 +22,12 @@ class KetAgyasSzoba(Szoba):
         super().__init__(100, szobaszam)
 
     pass
+
+
+class Szalloda:
+    def __init__(self, nev, szobak):
+        self.nev = nev
+        self.szobak = szobak
+        self.foglalasok = []
+
+    pass
