@@ -47,6 +47,16 @@ class Szalloda:
         else:
             self.foglalasok.remove(talalt_foglalas)
             return "Sikeres lemondás"
+
+    def foglalasok_list(self):
+        output = 'Foglalások:\n'
+        for foglalas in self.foglalasok:
+            output += foglalas.szobaszam + '\n'
+            output += foglalas.nev + '\n'
+            output += foglalas.datum + '\n'
+
+        return output
+
     pass
 
 
