@@ -1,4 +1,5 @@
 from abc import ABC
+from datetime import datetime
 
 
 class Szoba(ABC):
@@ -32,12 +33,16 @@ class Szalloda:
 
     def foglalas(self, szobaszam, datum, nev):
         talalt_szoba = next((szoba for szoba in self.szobak if szoba.szobaszam == szobaszam), None)
+        talalt_foglalas = next((foglalas for foglalas in self.foglalasok if
+                                foglalas.szoba.szobaszam == szobaszam and foglalas.datum == datum), None)
+        if talalt_foglalas is not None:
+            return "Ez a szoba már foglalt arra a dátumra"
         if talalt_szoba is None:
             return "Nincs ilyen szobaszámú szoba a szállodában"
         else:
             foglalas = Foglalas(talalt_szoba, datum, nev)
             self.foglalasok.append(foglalas)
-            return foglalas.ar
+            return "A foglalás megtörtént, az összeg pedig: " + str(foglalas.ar) + "Ft"
 
     def lemondas(self, nev):
         talalt_foglalas = next((foglalas for foglalas in self.foglalasok if foglalas.nev == nev), None)
@@ -50,10 +55,9 @@ class Szalloda:
     def foglalasok_list(self):
         output = 'Foglalások:\n'
         for foglalas in self.foglalasok:
-            output += "Szobaszám: "+str(foglalas.szoba.szobaszam) + '\n'
-            output += "Név: "+foglalas.nev + '\n'
-            output += "Dátum: "+foglalas.datum + '\n\n'
-
+            output += "Szobaszám: " + str(foglalas.szoba.szobaszam) + '\n'
+            output += "Név: " + foglalas.nev + '\n'
+            output += "Dátum: " + foglalas.datum.strftime("%Y-%m-%d") + '\n\n'
 
         return output
 
@@ -72,22 +76,23 @@ class Foglalas:
     pass
 
 print("Üdvözlünk a szállodában!\nVálassza ki a kívánt műveletet(1,2,3)\n1. Foglalás\n2. Lemondás\n3. Listázás")
-valasztott_opcio=input()
-if valasztott_opcio=="1":
+valasztott_opcio = input()
+if valasztott_opcio == "1":
     print("Ön a foglalást válaszotta, kérem adja meg a foglaláshoz szükséges adatokat")
-    nev=input("Név: ")
-    szobaszam=input("Szobaszám: ")
-    datum=input("Dátum: ")
+    bekert_nev = input("Név: ")
+    bekert_szobaszam = input("Szobaszám: ")
+    bekert_datum = input("Dátum: ")
     try:
-        szobaszam = int(szobaszam)
-        print("A foglalás megtörtént, az összeg pedig: " + str(szalloda.foglalas(int(szobaszam), datum, nev)) + " Ft")
+        bekert_datum = datetime.strptime(bekert_datum, "%Y-%m-%d")
+        bekert_szobaszam = int(bekert_szobaszam)
+        print(str(szalloda.foglalas(int(bekert_szobaszam), bekert_datum, bekert_nev)))
     except ValueError:
-        print(szalloda.foglalas(szobaszam, datum, nev))
-elif valasztott_opcio=="2":
+        print("Nem megfelelő paraméter")
+elif valasztott_opcio == "2":
     print("Ön a lemodnást válaszotta, kéream adja meg a lemondáshoz szükséges adatokat")
-    nev=input("Név: ")
-    print(szalloda.lemondas(nev))
-elif valasztott_opcio=="3":
+    bekert_nev = input("Név: ")
+    print(szalloda.lemondas(bekert_nev))
+elif valasztott_opcio == "3":
     print("Ön a listázást válaszotta")
     print(szalloda.foglalasok_list())
 else:
