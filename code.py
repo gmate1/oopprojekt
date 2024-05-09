@@ -30,6 +30,7 @@ class Szalloda:
         self.szobak = szobak
         self.foglalasok = []
 
+
     def foglalas(self, szobaszam, datum, nev):
         talalt_szoba = next((szoba for szoba in self.szobak if szoba.szobaszam == szobaszam), None)
         if talalt_szoba is None:
@@ -39,6 +40,13 @@ class Szalloda:
             self.foglalasok.append(foglalas)
             return foglalas.ar
 
+    def lemondas(self, nev):
+        talalt_foglalas = next((foglalas for foglalas in self.foglalasok if foglalas.nev == nev), None)
+        if talalt_foglalas is None:
+            return "Nincs ilyen foglalás"
+        else:
+            self.foglalasok.remove(talalt_foglalas)
+            return "Sikeres lemondás"
     pass
 
 
